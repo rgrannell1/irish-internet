@@ -1,7 +1,6 @@
 #!/usr/bin/env Rscript
 
 library(sp)
-library(ggplot2)
 library(maptools)
 
 
