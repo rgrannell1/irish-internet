@@ -1,7 +1,7 @@
 
 # Irish Internet v0.1.0
 
-A map of Twitter users in Ireland superimposed over OpenStreetMap's street data. Intended as literal wallpaper fodder; I intend to print out a copy for my sparsely decorated room.
+A map of Twitter users in Ireland superimposed over OpenStreetMap's street data. Intended as literal wallpaper fodder; I'm going to print out a copy for my sparsely decorated room.
 
 <img src="poster.png"> </img>
 
@@ -20,7 +20,7 @@ cd irish-internet
 create-map
 ```
 
-It takes about five minutes to generate the image on a middle of the range laptop.
+It takes about five minutes to generate the image on a mid-range laptop.
 
 ### Licence
 
