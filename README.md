@@ -20,7 +20,7 @@ cd irish-internet
 create-map
 ```
 
-It takes about five minutes to generate the image on a middle of the range laptop.
+It takes about five minutes to generate the image on a mid-range laptop.
 
 ### Licence
 
