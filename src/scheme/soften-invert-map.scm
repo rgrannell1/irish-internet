@@ -1,5 +1,4 @@
 
-
 (define (soften-invert-map image layer)
 
 	; invert the map colours for a night-time look
