@@ -3,7 +3,7 @@
 
 A map of Twitter users in Ireland superimposed over OpenStreetMap's street data.
 
-<img src="poster.png"> </img>
+<img src="images/irish-map.png"> </img>
 
 ### Dependencies
 
