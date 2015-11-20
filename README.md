@@ -9,15 +9,13 @@ A map of Twitter users in Ireland superimposed over OpenStreetMap's street data.
 
 * R
 * Gimp 2.8
-* sp, maptools
+* Make
 
 ### Installation
 
-
 ```bash
-git clone https://github.com/rgrannell1/irish-internet.git
-cd irish-internet
-create-map
+git clone https://github.com/rgrannell1/irish-internet.git && cd irish-internet
+make build
 ```
 
 It takes about five minutes to generate the image on a mid-range laptop.
