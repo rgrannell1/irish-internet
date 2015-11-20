@@ -9,7 +9,7 @@
 	(plug-in-softglow RUN-NONINTERACTIVE image layer 50 0.4 0.8) ;
 	(gimp-displays-flush))
 
-(define (cli-soften fpath)
+(define (cli-soften-invert-map fpath)
 
 	(let* (
 		; bind image to the loaded fpath.
