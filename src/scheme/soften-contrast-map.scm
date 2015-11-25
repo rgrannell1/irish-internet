@@ -2,7 +2,7 @@
 (define (soften-contrast-map image layer)
 
 	; adjust contrast to harden the appearance of the map.
-	(gimp-brightness-contrast layer -120 117)
+	(gimp-brightness-contrast layer -120 119)
 	; add a low intensity, wide radius glow to make tweets add colour to the city.
 	(plug-in-softglow RUN-NONINTERACTIVE image layer 50 0.4 0.8) ;
 	(gimp-displays-flush))

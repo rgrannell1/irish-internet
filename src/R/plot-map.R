@@ -1,5 +1,9 @@
 #!/usr/bin/env Rscript
 
+
+
+
+
 if (!require(sp)) {
 	install.packages(sp)
 }
@@ -27,35 +31,49 @@ library(docopt)
 
 
 '
-Usage: plot-map.R [-s X | --streetpath X] [-c X | --coordpath X] [-o X | --outfile <path>] [-d X | --dimension X]
+Usage: plot-map.R [-s X | --streetpath X] [-c X | --coordpath X] [-o X | --outfile <path>] [-d X | --scale X] [-x X | --longitude X] [-y X | --latitude X]
 
 Options:
 
 	-s X, --streetpath X     the location of the .shp file outline Ireland\'s streets [default: ireland/roads.shp].
 	-c X, --coordpath X      the location of a line-delimited longitude/latitude coordinates [default: data/irish-tweets.txt].
 	-o X, --outfile X        the location to which the render should be saved [default: irish-map.png].
-	-d X, --dimension X      the default width of the image; the height is 1.317 times larger [default: 2080].
+	-d X, --scale X          the pixels per degree of longitude/latitude  [default: 100]
+
+	-x X, --longitude X      the longitude boundaries to draw within [default: -11,-5]
+	-y X, --latitude X       the latitude boundaries to draw within [default: 51.5,55.5]
 
 ' -> doc
 
 
 
 
+calcImageDims <- list(
+	width  = function (longDegrees, scale = 1) {
+		scale * longDegrees
+	},
+	height = function (latDegrees, scale = 1) {
+		2 * scale * latDegrees
+	}
+)
+
+
+
 opts      <- docopt(doc)
+
+
+
+borders   <- list(
+	longitude = vapply(strsplit(opts $ longitude, ',')[[1]], as.numeric, numeric(1)),
+	latitude  = vapply(strsplit(opts $ latitude,  ',')[[1]], as.numeric, numeric(1))
+)
+
 
 constants <- list(
 
 	colour = list(
 		blue = '#55ACEE',
 		grey = '#333f4a'
-	),
-	dimensions = list(
-		width  = 1.000 * as.integer(opts $ dimension),
-		height = 1.317 * as.integer(opts $ dimension)
-	),
-	borders = list(
-		xlim = c(-11, -5),
-		ylim = c(51.5, 55.5)
 	),
 	graph = list(
 		res = 300,
@@ -74,10 +92,7 @@ streets     <- readShapeLines(opts $ streetpath)
 coords      <- as.list(read.table(opts $ coordpath))
 
 street_segs <- lapply(streets @ lines, function (line) {
-
-	stopifnot(length(line @ Lines) == 1)
 	line @ Lines[[1]] @ coords
-
 })
 
 op <- par(mar = rep(0, 4))
@@ -88,8 +103,10 @@ op <- par(mar = rep(0, 4))
 
 png(
 	opts $ outfile,
-	width = constants $ dimensions $ width,
-	height = constants $ dimensions $ height,
+
+	width  = calcImageDims $ width(diff(borders $ longitude), as.numeric(opts $ scale)),
+	height = calcImageDims $ height(diff(borders $ latitude), as.numeric(opts $ scale)),
+
 	res = constants $ graph $ res)
 
 	op <- par(mar = rep(0, 4))
@@ -97,8 +114,8 @@ png(
 	plot(
 		coords[[2]], coords[[1]],
 
-		xlim = constants $ borders $ xlim,
-		ylim = constants $ borders $ ylim,
+		xlim = borders $ longitude,
+		ylim = borders $ latitude,
 
 		col  = constants $ colour $ blue,
 
@@ -110,4 +127,4 @@ png(
 		lines(seg[,1], seg[,2], col = constants $ colour $ grey, lwd = constants $ graph $ lwd)
 	}) )
 
-dev.off()
+dev.off( )
